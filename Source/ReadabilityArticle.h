@@ -15,10 +15,12 @@ class QTREADABILITYSHARED_EXPORT ReadabilityArticle : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY loadingChanged)
+    Q_PROPERTY(QtReadabilityParserApi* api READ api WRITE setApi)
+
     Q_PROPERTY(QString htmlContent READ htmlContent NOTIFY loadingChanged)
     Q_PROPERTY(QUrl domain READ domain NOTIFY loadingChanged)
     Q_PROPERTY(QString author READ author NOTIFY loadingChanged)
-    Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY loadingChanged)
     Q_PROPERTY(QUrl shortUrl READ shortUrl NOTIFY loadingChanged)
     Q_PROPERTY(QString title READ title NOTIFY loadingChanged)
     Q_PROPERTY(QString htmlExcerpt READ htmlExcerpt NOTIFY loadingChanged)
@@ -38,6 +40,7 @@ class QTREADABILITYSHARED_EXPORT ReadabilityArticle : public QObject
 public:
     explicit ReadabilityArticle(QObject* parent = 0);
 
+    QtReadabilityParserApi* api();
     QString htmlContent();
     QUrl domain();
     QString author();

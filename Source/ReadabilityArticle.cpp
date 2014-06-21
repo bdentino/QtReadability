@@ -10,6 +10,8 @@ ReadabilityArticle::ReadabilityArticle(QObject* parent)
 {
 }
 
+QtReadabilityParserApi* ReadabilityArticle::api() { return m_api; }
+
 QString ReadabilityArticle::htmlContent() { return m_htmlContent; }
 
 QUrl ReadabilityArticle::domain() { return m_domain; }
@@ -49,6 +51,10 @@ QString ReadabilityArticle::error() { return m_error; }
 
 void ReadabilityArticle::setApi(QtReadabilityParserApi* api)
 {
+    if (m_api) {
+        qWarning("Cannot change article API after initialization");
+        return;
+    }
     m_api = api;
     tryLoad();
 }
@@ -91,7 +97,7 @@ void ReadabilityArticle::tryLoad()
 
 void ReadabilityArticle::onResponseReceived(QJsonObject response)
 {
-    fromJsonObject(response);
+    fromJsonObject(m_api->parseArticleResponse(response));
 }
 
 void ReadabilityArticle::onRequestError(QNetworkReply::NetworkError error, QString description)

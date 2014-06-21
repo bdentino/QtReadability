@@ -52,7 +52,7 @@ void ReadabilityConfidence::tryLoad()
             m_request->deleteLater();
         }
 
-        m_request = m_api->getParseRequest(m_url);
+        m_request = m_api->getConfidenceRequest(m_url);
         connect(m_request, SIGNAL(responseReady(QJsonObject)),
                 this, SLOT(onResponseReceived(QJsonObject)));
         connect(m_request, SIGNAL(requestError(QNetworkReply::NetworkError,QString)),
@@ -65,7 +65,7 @@ void ReadabilityConfidence::tryLoad()
 
 void ReadabilityConfidence::onResponseReceived(QJsonObject response)
 {
-    fromJsonObject(response);
+    fromJsonObject(m_api->parseConfidenceResponse(response));
 }
 
 void ReadabilityConfidence::onRequestError(QNetworkReply::NetworkError error, QString description)

@@ -16,13 +16,17 @@ DEFINES += QTREADABILITY_LIBRARY
 SOURCES += QtReadabilityApi.cpp \
     ReadabilityArticle.cpp \
     ReadabilityConfidence.cpp \
-    ReadabilityHttpRequest.cpp
+    ReadabilityHttpRequest.cpp \
+    ReadabilityArticleLoader.cpp \
+    ReadabilityConfidenceLoader.cpp
 
 HEADERS += QtReadabilityApi.h\
     QtReadability_Global.h \
     ReadabilityArticle.h \
     ReadabilityConfidence.h \
-    ReadabilityHttpRequest.h
+    ReadabilityHttpRequest.h \
+    ReadabilityArticleLoader.h \
+    ReadabilityConfidenceLoader.h
 
 unix {
     target.path = /usr/lib

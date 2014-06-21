@@ -13,7 +13,7 @@
 
 struct QTREADABILITYSHARED_EXPORT ReadabilityApiVersion {
     unsigned short majorVersion;
-    unsigned short minorVersion;
+    unsigned short minorVersion; //Currently not used, but keeping for extensibility
 
     ReadabilityApiVersion(QString version)
     {
@@ -24,37 +24,70 @@ struct QTREADABILITYSHARED_EXPORT ReadabilityApiVersion {
         if (parts.length() < 2) return;
         minorVersion = parts.at(1).toShort();
     }
+
+    ReadabilityApiVersion()
+    {
+        majorVersion = 0;
+        minorVersion = 0;
+    }
+
+    QString toString() const
+    {
+        return QString("v%1").arg(majorVersion);
+    }
+
+    bool operator==(const ReadabilityApiVersion& rhs)
+    {
+        return majorVersion == rhs.majorVersion && minorVersion == rhs.minorVersion;
+    }
+
+    bool operator!=(const ReadabilityApiVersion& rhs)
+    {
+        return !(*this == rhs);
+    }
 };
 
 class ReadabilityArticle;
 class ReadabilityConfidence;
 class ReadabilityHttpRequest;
+class ReadabilityArticleLoader;
+class ReadabilityConfidenceLoader;
 class QTREADABILITYSHARED_EXPORT QtReadabilityParserApi : public QObject
 {
     friend class ReadabilityArticle;
     friend class ReadabilityConfidence;
     Q_OBJECT
 
+    Q_PROPERTY(QByteArray token READ token WRITE setToken)
+    Q_PROPERTY(QString version READ versionString WRITE setVersion)
+
 public:
     QtReadabilityParserApi(ReadabilityApiVersion version, QByteArray token,
                            QObject* parent = 0);
 
+    ReadabilityArticle* parseUrl(QUrl url);
     ReadabilityConfidence* parseConfidence(QUrl url);
 
-    //TODO: This allows you to immediately get a reference to an object that updates
-    //      as data comes in. It may be useful to have a secondary method of requesting
-    //      a url that returns the 'ready' object via a signal after all loading is done.
-    ReadabilityArticle* parseUrl(QUrl url);
+    ReadabilityArticleLoader* getArticleLoader(QUrl url);
+    ReadabilityConfidenceLoader* getConfidenceLoader(QUrl url);
 
-    QString versionString();
-    ReadabilityApiVersion version();
+    void setVersion(QString version);
+    QString versionString() const;
+    ReadabilityApiVersion version() const;
+
+    void setToken(const QByteArray token);
+    const QByteArray token() const;
 
 protected:
     ReadabilityHttpRequest* getParseRequest(QUrl articleUrl);
+    ReadabilityHttpRequest* getConfidenceRequest(QUrl articleUrl);
+
+    QJsonObject parseArticleResponse(QJsonObject response);
+    QJsonObject parseConfidenceResponse(QJsonObject response);
 
 private:
     ReadabilityApiVersion m_version;
-    const QByteArray m_token;
+    QByteArray m_token;
 
     static const QString BaseUrl;
 };
