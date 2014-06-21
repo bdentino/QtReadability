@@ -62,6 +62,8 @@ class QTREADABILITYSHARED_EXPORT QtReadabilityParserApi : public QObject
     Q_PROPERTY(QString version READ versionString WRITE setVersion)
 
 public:
+    QtReadabilityParserApi(QObject* parent = 0);
+
     QtReadabilityParserApi(ReadabilityApiVersion version, QByteArray token,
                            QObject* parent = 0);
 

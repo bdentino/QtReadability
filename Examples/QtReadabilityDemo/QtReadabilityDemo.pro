@@ -8,13 +8,13 @@ RESOURCES += qml.qrc
 
 INCLUDEPATH += $$PWD/../../Source
 
-LIBS += -L../../Source -lQtReadability
+LIBS += -L../../Source -l$$qtLibraryTarget(QtReadability)
 
 macx {
-    PRE_TARGETDEPS += ../../Source/libQtReadability.dylib
+    PRE_TARGETDEPS += ../../Source/lib$$qtLibraryTarget(QtReadability).dylib
 
     sharedLibs.path = Contents/MacOS
-    sharedLibs.files += $$OUT_PWD/../../Source/libQtReadability.1.dylib
+    sharedLibs.files += $$OUT_PWD/../../Source/lib$$qtLibraryTarget(QtReadability).dylib
 
     for(lib, sharedLibs.files) {
         QMAKE_POST_LINK += "cp $${lib} $${TARGET}.app/$${sharedLibs.path}/;"

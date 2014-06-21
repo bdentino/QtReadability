@@ -10,8 +10,19 @@
 
 const QString QtReadabilityParserApi::BaseUrl = "https://readability.com/api/content";
 
-QtReadabilityParserApi::QtReadabilityParserApi(ReadabilityApiVersion version,
-                                               QByteArray token,
+QtReadabilityParserApi::QtReadabilityParserApi(QObject* parent)
+    : QObject(parent)
+{
+    qRegisterMetaType<ReadabilityArticle*>();
+    qRegisterMetaType<ReadabilityConfidence*>();
+    qRegisterMetaType<QtReadabilityParserApi*>();
+
+    qmlRegisterType<ReadabilityArticle>();
+    qmlRegisterType<ReadabilityConfidence>();
+    qmlRegisterType<QtReadabilityParserApi>();
+}
+
+QtReadabilityParserApi::QtReadabilityParserApi(ReadabilityApiVersion version, QByteArray token,
                                                QObject* parent)
     : QObject(parent),
       m_version(version),

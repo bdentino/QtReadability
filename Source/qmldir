@@ -1,0 +1,4 @@
+module Qtino.Readability
+plugin QtReadability
+classname QtReadabilityPlugin
+typeinfo plugins.qmltypes
