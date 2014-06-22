@@ -16,6 +16,7 @@ class QTREADABILITYSHARED_EXPORT ReadabilityConfidence : public QObject
 
     Q_PROPERTY(double confidence READ confidence NOTIFY loadingChanged)
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY loadingChanged)
+    Q_PROPERTY(QtReadabilityParserApi* api READ api WRITE setApi)
 
     Q_PROPERTY(bool isLoading READ isLoading NOTIFY loadingChanged)
 
@@ -26,6 +27,7 @@ public:
 
     double confidence();
     QUrl url();
+    QtReadabilityParserApi* api();
 
     bool isLoading();
 

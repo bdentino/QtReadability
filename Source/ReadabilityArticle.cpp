@@ -124,7 +124,7 @@ void ReadabilityArticle::fromJsonObject(QJsonObject description)
     m_wordCount = description["word_count"].toInt();
     m_totalPages = description["total_pages"].toInt();
     m_publishedDate = QDateTime::fromString(
-                description["date_published"].toString(),
+            description["date_published"].toString(),
             "yyyy-MM-dd hh:mm:ss");
     m_htmlDek = description["dek"].toString();
     m_leadImageSource = QUrl(description["lead_image_url"].toString());

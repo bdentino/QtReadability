@@ -14,6 +14,8 @@ double ReadabilityConfidence::confidence() { return m_confidence; }
 
 QUrl ReadabilityConfidence::url() { return m_url; }
 
+QtReadabilityParserApi* ReadabilityConfidence::api() { return m_api; }
+
 bool ReadabilityConfidence::isLoading() {
     if (m_request) return m_request->isLoading();
     else return false;
@@ -23,6 +25,10 @@ QString ReadabilityConfidence::error() { return m_error; }
 
 void ReadabilityConfidence::setApi(QtReadabilityParserApi* api)
 {
+    if (m_api) {
+        qWarning("Cannot change article API after initialization");
+        return;
+    }
     m_api = api;
     tryLoad();
 }
@@ -56,7 +62,7 @@ void ReadabilityConfidence::tryLoad()
         connect(m_request, SIGNAL(responseReady(QJsonObject)),
                 this, SLOT(onResponseReceived(QJsonObject)));
         connect(m_request, SIGNAL(requestError(QNetworkReply::NetworkError,QString)),
-                this, SLOT(onError(QNetworkReply::NetworkError,QString)));
+                this, SLOT(onRequestError(QNetworkReply::NetworkError,QString)));
         m_request->send();
     }
     emit loadingChanged();
