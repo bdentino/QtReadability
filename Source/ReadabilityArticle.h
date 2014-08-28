@@ -66,6 +66,8 @@ public:
 
 signals:
     void loadingChanged();
+    void startedLoading();
+    void finishedLoading();
     void errorChanged(QString description);
 
 public slots:

@@ -88,7 +88,7 @@ const QByteArray QtReadabilityParserApi::token() const
 ReadabilityHttpRequest* QtReadabilityParserApi::getParseRequest(QUrl articleUrl)
 {
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("url", articleUrl.toString());
+    urlQuery.addQueryItem("url", QUrl::toPercentEncoding(articleUrl.toString()));
     urlQuery.addQueryItem("token", m_token);
     QString path = QString("/%1/parser").arg(versionString());
     QUrl url(QtReadabilityParserApi::BaseUrl + path);
@@ -99,7 +99,7 @@ ReadabilityHttpRequest* QtReadabilityParserApi::getParseRequest(QUrl articleUrl)
 ReadabilityHttpRequest* QtReadabilityParserApi::getConfidenceRequest(QUrl articleUrl)
 {
     QUrlQuery urlQuery;
-    urlQuery.addQueryItem("url", articleUrl.toString());
+    urlQuery.addQueryItem("url", QUrl::toPercentEncoding(articleUrl.toString()));
     urlQuery.addQueryItem("token", m_token);
     QString path = QString("/%1/confidence").arg(versionString());
     QUrl url(QtReadabilityParserApi::BaseUrl + path);

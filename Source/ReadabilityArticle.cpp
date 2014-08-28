@@ -90,6 +90,7 @@ void ReadabilityArticle::tryLoad()
         connect(m_request, SIGNAL(requestError(QNetworkReply::NetworkError,QString)),
                 this, SLOT(onRequestError(QNetworkReply::NetworkError,QString)));
         m_request->send();
+        emit startedLoading();
     }
     emit loadingChanged();
     emit errorChanged(m_error);
@@ -108,6 +109,8 @@ void ReadabilityArticle::onRequestError(QNetworkReply::NetworkError error, QStri
              qPrintable(description));
     m_error = QString("Cannot access article content (%1)").arg(description);
     emit errorChanged(description);
+    if (!m_request->isLoading())
+        emit finishedLoading();
 }
 
 void ReadabilityArticle::fromJsonObject(QJsonObject description)
@@ -135,4 +138,5 @@ void ReadabilityArticle::fromJsonObject(QJsonObject description)
     m_parsedPages = description["rendered_pages"].toInt();
 
     emit loadingChanged();
+    emit finishedLoading();
 }

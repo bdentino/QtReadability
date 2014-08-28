@@ -37,6 +37,8 @@ public:
     void setApi(QtReadabilityParserApi* api);
 
 signals:
+    void finishedLoading();
+    void startedLoading();
     void loadingChanged();
     void errorChanged(QString description);
 

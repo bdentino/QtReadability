@@ -64,8 +64,7 @@ void ReadabilityHttpRequest::redirectRequest()
 
     QUrl redirectionTarget =
             reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
-    qDebug("Readability Parser Request Info: Got Redirect Request to %s",
-           qPrintable(redirectionTarget.toString()));
+
     if (redirectionTarget.isValid())
     {
         get(redirectionTarget);

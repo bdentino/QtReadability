@@ -1,0 +1,4 @@
+#include "Readability/QtReadability_Global.h"
+#include "Readability/QtReadabilityApi.h"
+#include "Readability/ReadabilityArticle.h"
+#include "Readability/ReadabilityConfidence.h"
