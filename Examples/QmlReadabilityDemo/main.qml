@@ -12,7 +12,7 @@ Window {
     ReadabilityParserApi {
         id: parserApi
         version: "v1"
-        token: "<api_token>"
+        token: "91de23430430c02b53345cb6b4bb9e5fe5257f35"
     }
 
     ReadabilityConfidence {

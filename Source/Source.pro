@@ -22,14 +22,18 @@ SOURCES += QtReadabilityApi.cpp \
     ReadabilityConfidenceLoader.cpp \
     QtReadabilityPlugin.cpp
 
-HEADERS += QtReadabilityApi.h\
-    QtReadability_Global.h \
-    ReadabilityArticle.h \
-    ReadabilityConfidence.h \
+PUBLIC_HEADERS += QtReadability_Global.h \
+                  QtReadabilityApi.h \
+                  ReadabilityArticle.h \
+                  ReadabilityConfidence.h
+
+HEADERS += \
+    $$PUBLIC_HEADERS \
     ReadabilityHttpRequest.h \
     ReadabilityArticleLoader.h \
     ReadabilityConfidenceLoader.h \
-    QtReadabilityPlugin.h
+    QtReadabilityPlugin.h \
+    QtReadability.h
 
 OTHER_FILES += \
     qmldir
@@ -45,14 +49,41 @@ QMAKE_MOC_OPTIONS += -Muri=$$uri
 }
 
 installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
+includePath = $$[QT_INSTALL_HEADERS]/$$replace(uri, \\., /)
+
+unix: { libprefix = lib }
+win32: { libprefix = }
+
+CONFIG(static, static|shared) {
+    macx|ios|unix: { libsuffix = a }
+    win32: { libsuffix = lib }
+}
+else {
+    macx: { libsuffix = dylib }
+    unix:!macx: { libsuffix = so }
+    win32: { libsuffix = lib }
+}
 
 cleanTarget.files +=
 cleanTarget.path += $$installPath
-macx: cleanTarget.extra = rm -rf $$installPath
-ios: cleanTarget.extra = rm -rf $$installPath
+macx|ios|unix: cleanTarget.extra = rm -rf $$installPath/*.qml $$installPath/qmldir $$installPath/plugins.qmltypes $$installPath/$$libprefix$$TARGET$${qtPlatformTargetSuffix}.$$libsuffix
+
+headers.files = $$PUBLIC_HEADERS
+headers.path = $$includePath
+
+universalInclude.files = QtReadability
+universalInclude.path = $$includePath/..
 
 qmldir.files = qmldir
 qmldir.path = $$installPath
 target.path = $$installPath
 
-INSTALLS += cleanTarget target qmldir
+plugindump.files +=
+plugindump.path = $$installPath
+macx {
+    plugindump.extra = qmlplugindump $$uri 1.0 > $$installPath/plugins.qmltypes
+}
+
+INSTALLS += cleanTarget target qmldir plugindump headers universalInclude
+
+QMAKE_POST_LINK += make install

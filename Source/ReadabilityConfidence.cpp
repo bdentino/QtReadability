@@ -64,6 +64,7 @@ void ReadabilityConfidence::tryLoad()
         connect(m_request, SIGNAL(requestError(QNetworkReply::NetworkError,QString)),
                 this, SLOT(onRequestError(QNetworkReply::NetworkError,QString)));
         m_request->send();
+        emit startedLoading();
     }
     emit loadingChanged();
     emit errorChanged(m_error);
@@ -89,4 +90,5 @@ void ReadabilityConfidence::fromJsonObject(QJsonObject description)
     m_url = QUrl(description["url"].toString());
     m_confidence = description["confidence"].toDouble();
     emit loadingChanged();
+    emit finishedLoading();
 }
