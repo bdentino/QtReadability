@@ -26,3 +26,6 @@ Makefile*
 # QtCreator
 
 *.autosave
+
+Examples/QmlReadabilityDemo/ApiToken.js
+Examples/QtReadabilityDemo/ApiToken.h

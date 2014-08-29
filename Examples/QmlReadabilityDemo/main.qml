@@ -4,6 +4,14 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import Qtino.Readability 1.0
 
+// The file "ApiToken.js" doesn't exist in the repo. You need to create it and
+// define the following variables using the values provided by the Readability
+// organization in order to use their API in your application:
+//
+//   //ApiToken.js
+//   var apiToken = <your_api_token>
+import "ApiToken.js" as ApiToken
+
 Window {
     id: rootWindow
 
@@ -12,7 +20,7 @@ Window {
     ReadabilityParserApi {
         id: parserApi
         version: "v1"
-        token: "<api_token>"
+        token: ApiToken.apiToken
     }
 
     ReadabilityConfidence {

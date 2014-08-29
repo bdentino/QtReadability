@@ -25,15 +25,15 @@ SOURCES += QtReadabilityApi.cpp \
 PUBLIC_HEADERS += QtReadability_Global.h \
                   QtReadabilityApi.h \
                   ReadabilityArticle.h \
-                  ReadabilityConfidence.h
+                  ReadabilityConfidence.h \
+                  QtReadability
 
 HEADERS += \
     $$PUBLIC_HEADERS \
     ReadabilityHttpRequest.h \
     ReadabilityArticleLoader.h \
     ReadabilityConfidenceLoader.h \
-    QtReadabilityPlugin.h \
-    QtReadability.h
+    QtReadabilityPlugin.h
 
 OTHER_FILES += \
     qmldir

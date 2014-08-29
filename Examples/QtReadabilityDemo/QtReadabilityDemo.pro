@@ -20,3 +20,6 @@ macx {
         QMAKE_POST_LINK += "cp $${lib} $${TARGET}.app/$${sharedLibs.path}/;"
     }
 }
+
+HEADERS += \
+    ApiToken.h
