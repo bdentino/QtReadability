@@ -33,7 +33,8 @@ HEADERS += \
     ReadabilityHttpRequest.h \
     ReadabilityArticleLoader.h \
     ReadabilityConfidenceLoader.h \
-    QtReadabilityPlugin.h
+    QtReadabilityPlugin.h \
+    QtReadability.h
 
 OTHER_FILES += \
     qmldir
